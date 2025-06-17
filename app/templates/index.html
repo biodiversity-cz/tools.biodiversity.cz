@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+    <title>DEMUS2JACQ convertor</title>
+</head>
+<body>
+
+<h2>!DEMO! Konvertor DEMUS --> JACQ </h2>
+<p>Tento nástroj vám z DEMUS exportu (typ "Běžný") vygeneruje Excelovou tabulku ve formátu který používá JACQ pro hromadný import záznamů. Více informací viz Vojta Taraška BRNM.</p>
+    <h4>Nahrajte DEMUS export (soubor s příponou mdb)</h4>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".mdb" required>
+        <select name="type">
+        <option value="jacq">JACQ</option>
+        <option value="pladias">Pladias</option>
+    </select>
+        <input type="submit" value="Zkonvertovat">
+    </form>
+</body>
+</html>

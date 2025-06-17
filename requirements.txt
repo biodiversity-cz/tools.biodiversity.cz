@@ -1,0 +1,3 @@
+git+https://github.com/biodiversity-cz/demusExporter.git@main
+flask
+gunicorn
