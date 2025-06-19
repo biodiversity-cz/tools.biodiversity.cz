@@ -47,16 +47,15 @@ def barcodeGenerator():
         if start is not None and end is not None and prefix is not None:
             values = [f"{prefix} {i}" for i in range(start, end + 1)]
 
-        example_url = url_for("herbarium.barcodeGenerator", title="Herbarium Universitatis Carolinae, Praga", subtitle="Váňa", prefix="PRC", start=483826, end=483850, _external=True)
-#         pdf_url = url_for("main.pdf", **query_params)
-
         return render_template(
             "herbarium/barcodeGenerator.html",
             title=title,
             subtitle=subtitle,
+            prefix=prefix,
+            start=start,
+            end=end,
             queryParams=query_params,
-            values=values,
-            example_url=example_url)
+            values=values)
 
 @herbarium_bp.route("/barcode/<path:text>")
 def barcode(text):
@@ -74,11 +73,11 @@ def barcode(text):
     )
 
     options = {
-        "module_width": 1.0,
-        "module_height": 50.0,
-        "font_size": 7,
+        "module_width": 0.2,
+        "module_height": 5.0,
+        "write_text": False,
         "text_distance": 0,
-        "quiet_zone": 1.0
+        "quiet_zone": 0.8
     }
 
     buf = BytesIO()

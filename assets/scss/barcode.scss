@@ -1,0 +1,53 @@
+div.label {
+  width: 6.3cm;
+  height: 2cm;
+  box-sizing: border-box;
+  padding: 0.5mm;
+  font-size: 10pt;
+  page-break-inside: avoid;
+  text-align: center;
+
+  .druh {
+    font-size: 10pt;
+    text-align: left;
+    //margin-bottom: 2mm;
+  }
+
+  .druh2 {
+    font-size: 10pt;
+    text-align: left;
+  }
+
+  .accession {
+    text-align: right
+  }
+
+  .herbarium{
+    font-size: 7pt;
+    font-weight: bold;
+  }
+
+  .collection{
+    font-size: 7pt;
+  }
+
+  .barcodeId{
+    font-size: 8pt;
+  }
+
+  img {
+    height: 8mm;
+  }
+
+  &:first-child {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  &:nth-child(2) {
+    border: 1px solid black;
+  }
+  &:nth-child(3) {
+    border: none !important;
+  }
+}
+

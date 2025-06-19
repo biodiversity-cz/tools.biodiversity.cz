@@ -12,12 +12,12 @@
 </head>
 
 <body>
-<nav class="navbar navbar-light bg-light static-top">
+<nav class="navbar navbar-light bg-light static-top no-print">
     <img src="{{ url_for('static', filename='images/ENG_CZ_eosc-logo-barevne.svg') }}" style="max-width: 500px" alt="Logo">
 </nav>
-<hr>
+<hr class="no-print">
 {% block branding %}
-<div class="container mb-3">
+<div class="container mb-3 no-print">
     <div class="row">
         <h2>Katalog doplňkových služeb repozitářů biodiverzitních dat NRP [<a href="https://biodiversity.cz">link</a>]
         </h2>
@@ -27,7 +27,7 @@
 
 {% block content %}{% endblock %}
 {% block testimonials %}
-<section class="testimonials bg-light mt-5">
+<section class="testimonials bg-light mt-5 no-print">
     <div class="container">
         <div class="row">
             <img src="https://cdn.muni.cz/media/3526850/eu-msmt-barevne-aj.svg?mode=crop&amp;center=0.5,0.5&amp;rnd=133276035320000000" alt="..." class="mx-auto d-block" style="height: 83px; width: 575px;">

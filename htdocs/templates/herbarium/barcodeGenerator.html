@@ -1,105 +1,99 @@
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Seznam přidělených kódů</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .page-break {
-            break-after: page;
-        }
-        td {
-            padding: 2px;
-            text-align: center;
-            vertical-align: middle;
-            width: 33%;
-        }
-        td:nth-child(2) {
-            border: 1px solid black;
-        }
-        td:first-child {
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-        }
-        td:nth-child(3) {
-            border: none !important;
-        }
-        p {
-            margin: 0;
-            padding: 0;
-        }
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-            table {
-                width: 98vw;
-                height: 98vh;
-            }
-            .container {
-                width: 98vw !important;
-                max-width: 100vw !important;
-                margin: 0 0 0 15pt !important;
-                padding: 0 !important;
-            }
+{% extends "base.html" %}
+{% block title %}BarcodeGen | Biodiversity.CZ{% endblock %}
+{% block content %}
+<section class="no-print container">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-auto">
+                    <span class="badge bg-print rounded-pill ms-1">tisková sestava</span>
+                </div>
+                <div class="col-auto ms-auto">
+                    Odborný konzultant: <a href="mailto:michal.stefanek@natur.cuni.cz ">Michal
+                    Štefánek</a>, PřF UK Praha
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Generátor přidělených kódů</h5>
+            <p class="card-text">Vyplňte údaje ve fromuláři a vygenerujte si sestavu štítků pro herbářové položky.
+                Štítky se objeví pod formulářem, ale přesné rozložení pro tisk uvidíte až po vyvolání tiskového dialogu
+                (Ctrl+P) 🖨️. Nastavení předpokládá tisk na papír formátu A4, pro nejlepší výsledky nastavte okraje na
+                „žádné“ (None). <br> Po odeslání formuláře si můžete uložit odkaz do záložek prohlížeče, budete tak mít
+                předvyplněné hodnoty pro příště.</p>
+            <form method="get" class="g-3" action="">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Jméno herbáře</label>
+                            <input type="text" class="form-control" name="title" id="title"
+                                   placeholder="Herbarium Universitatis Carolinae, Praga" value="{{ title }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="prefix" class="form-label">Akronym/prefix</label>
+                            <input type="text" class="form-control" name="prefix" id="prefix" placeholder="PRC"
+                                   value="{{ prefix }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="subtitle" class="form-label">Sbírka</label>
+                            <input type="text" class="form-control" name="subtitle" id="subtitle" placeholder="Váňa"
+                                   value="{{ subtitle }}">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="start" class="form-label">První ID</label>
+                            <input type="text" class="form-control" name="start" id="start" inputmode="numeric"
+                                   pattern="[0-9]+"
+                                   title="Zadejte celé číslo" required placeholder="1000" value="{{ start }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="end" class="form-label">Poslední ID</label>
+                            <input type="text" class="form-control" name="end" id="end" inputmode="numeric"
+                                   pattern="[0-9]+"
+                                   title="Zadejte celé číslo" required placeholder="1250" value="{{ end }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-3">Vytvořit sestavu</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 
-            td {
-                width: 33vw;
-                height: calc(98vh / 14);
-            }
-        }
-    </style>
-</head>
-<body>
-<div class="container mt-4">
-    <section class="no-print">
-        <h1>Seznam přidělených kódů – generátor</h1>
-        <p>
-            Konfigurace výstupu se provádí úpravou URL – tuto doporučuji si uložit a jen v ní měnit start-stop hodnoty.
-            Časem mohu dodělat další konfiguraci i přímo webový formulář kde by si uživatel navolil, ale prozatím to berme
-            jako pilot a probereme na setkání herbářů zapojených v repozitáři.
-        </p>
-        <p>Modelová URL je:
-            <b>
-                <a href="{{ example_url }}">{{ example_url }}</a>
-            </b>
-        </p>
-        <hr>
-        <br>
-    </section>
+<section class="barcode container">
+    {% for code in values %}
+    <div class="row">
+        <div class="label">
+            <div class="druh">Druh:</div>
+            <div class="accession" style="">Akc. no.: &nbsp;&nbsp;&nbsp;</div>
+            <div class="druh2">Sběratel+číslo:</div>
+        </div>
+        <div class="label">
+            <div class="herbarium">{{ title }}</div>
+            {% if subtitle %}
+            <div class="collection">{{ subtitle }}</div>
+            {% endif %}
+            <img src="{{ url_for('herbarium.barcode', text=code) }}">
+            <div class="barcodeId">{{ code }}</div>
+        </div>
+        <div class="label">
+            <div class="herbarium">{{ title }}</div>
+            {% if subtitle %}
+            <div class="collection">{{ subtitle }}</div>
+            {% endif %}
+            <img src="{{ url_for('herbarium.barcode', text=code) }}">
+            <div class="barcodeId">{{ code }}</div>
+        </div>
+    </div>
+    {% if loop.index % 14 == 0 %}
+    <div style="page-break-after:always"></div>
+    {% endif %}
+    {% endfor %}
+</section>
 
-    <section>
-        <table class="table">
-            <tbody>
-            {% for code in values %}
-            <tr class="{% if loop.index % 14 == 0 %}page-break{% endif %}">
-                <td>
-                    <p style="font-size: 16pt; text-align: left; margin-bottom: 14pt">Druh:</p>
-                    <p style="font-size: 16pt; text-align: right">Akc. no.: &nbsp;&nbsp;&nbsp;</p>
-                    <p style="font-size: 16pt; text-align: left; margin-top: 14pt">Sběratel+číslo:</p>
-                </td>
-                <td>
-                    <p style="font-size: 18pt; font-weight: bold; text-align: center">{{ title }}</p>
-                    {% if subtitle %}
-                    <p style="font-size: 15pt; text-align: center">{{ subtitle }}</p>
-                    {% endif %}
-                    <img style="max-width: 90%" src="{{ url_for('herbarium.barcode', text=code) }}">
-                    <p style="font-size: 21pt; text-align: center; margin-top: 5px;">{{ code }}</p>
-                </td>
-                <td>
-                    <p style="font-size: 18pt; font-weight: bold; text-align: center">{{ title }}</p>
-                    {% if subtitle %}
-                    <p style="font-size: 15pt; text-align: center">{{ subtitle }}</p>
-                    {% endif %}
-                    <img style="max-width: 90%" src="{{ url_for('herbarium.barcode', text=code) }}">
-                    <p style="font-size: 21pt; text-align: center; margin-top: 5px;">{{ code }}</p>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </section>
-</div>
-</body>
-</html>
+{% endblock %}

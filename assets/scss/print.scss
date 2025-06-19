@@ -1,0 +1,16 @@
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .page {
+    width: 21cm; /* A4 */
+    padding: 0;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+}
