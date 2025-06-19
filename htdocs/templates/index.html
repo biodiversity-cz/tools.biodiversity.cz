@@ -2,22 +2,59 @@
 
 {% block content %}
 <div class="container">
-    <h3>Nástroje pro kurátory herbářových sbírek</h3>
-    <div class="row">
-        <h4>DEMUS Convertor</h4>
-        <p>Tento nástroj vám z DEMUS exportu (typ "Běžný") vygeneruje Excelovou tabulku se strukturou kterou používá JACQ(popř. Pladias) pro hromadný import záznamů.</p>
-        <p>Odborný garant <a href="mailto:vtaraska@mzm.cz">dr. Vojtěch Taraška</a>, Moravské zemské muzeum v Brně</p>
-        <p><a href="{{ url_for('herbarium.demus') }}" target="_blank">link</a></p>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h4>Herbářové sbírky</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="fw-bold"><a href="{{ url_for('herbarium.demus') }}" target="_blank">převodník DEMUS</a>
+                        </div>
+                        Na základě DEMUS exportu (typ "Běžný") vygeneruje Excelovou tabulku se strukturou používanou
+                        platformami JACQ/PLADIAS pro hromadný import záznamů.
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        Odborný konzultant: <a href="mailto:vtaraska@mzm.cz">Vojtěch Taraška</a>, Moravské zemské muzeum
+                        v
+                        Brně
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <span class="badge bg-conversion rounded-pill ms-1">konverze dat</span>
+                        <span class="badge bg-jacq rounded-pill ms-1">JACQ</span>
+                        <span class="badge bg-pladias rounded-pill ms-1">PLADIAS</span>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="fw-bold">
+                            <a href="{{ url_for('herbarium.barcodeGenerator') }}" target="_blank">generátor přidělených
+                                kódů</a>
+                        </div>
+                        Tisk čárových kódů pro herbářové položky.
+                    </div>
+                    <div class="col-sm-6 col-md-4"> Odborný konzultant: <a href="mailto:michal.stefanek@natur.cuni.cz ">Michal
+                        Štefánek</a>, PřF UK Praha
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <span class="badge bg-print rounded-pill ms-1">tisková sestava</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
-
-    <div class="row">
-        <h4>Generátor přidělených kódů</h4>
-        <p>Tisk čárových kódů pro herbářové položky</p>
-        <p>Odborný garant <a href="mailto:michal.stefanek@natur.cuni.cz ">Mgr. Michal Štefánek</a>, PřF UK Praha</p>
-        <p><a href="{{ url_for('herbarium.barcodeGenerator') }}" target="_blank">link</a></p>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h4>Genetická banka</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-start disabled">připravujeme pro
+                2026
+            </li>
+        </ul>
     </div>
-
-    <h3>Nástroje pro kurátory genetických bank</h3>
-
 </div>
 {% endblock %}

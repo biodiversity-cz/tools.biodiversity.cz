@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>{% block title %}Tools.Biodiversity.CZ{% endblock %}</title>
+    <title>{% block title %}TOOLS  | Biodiversity.CZ{% endblock %}</title>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="snippet,archive">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
@@ -15,11 +15,19 @@
 <nav class="navbar navbar-light bg-light static-top">
     <img src="{{ url_for('static', filename='images/ENG_CZ_eosc-logo-barevne.svg') }}" style="max-width: 500px" alt="Logo">
 </nav>
-{% block branding %}<h2>Nástroje a doplňkové služby repozitářů biodiverzitních dat NRP</h2>{% endblock %}
 <hr>
+{% block branding %}
+<div class="container mb-3">
+    <div class="row">
+        <h2>Katalog doplňkových služeb repozitářů biodiverzitních dat NRP [<a href="https://biodiversity.cz">link</a>]
+        </h2>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}{% endblock %}
 {% block testimonials %}
-<section class="testimonials bg-light">
+<section class="testimonials bg-light mt-5">
     <div class="container">
         <div class="row">
             <img src="https://cdn.muni.cz/media/3526850/eu-msmt-barevne-aj.svg?mode=crop&amp;center=0.5,0.5&amp;rnd=133276035320000000" alt="..." class="mx-auto d-block" style="height: 83px; width: 575px;">
