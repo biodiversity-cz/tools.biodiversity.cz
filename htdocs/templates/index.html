@@ -1,22 +1,23 @@
-<!doctype html>
-<html>
-<head>
-    <title>DEMUS2JACQ convertor</title>
-      <link rel="stylesheet" href="{{ url_for('static', filename='css.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
 
-<h2>!DEMO! Konvertor DEMUS --> JACQ </h2>
-<p>Tento nástroj vám z DEMUS exportu (typ "Běžný") vygeneruje Excelovou tabulku ve formátu který používá JACQ pro hromadný import záznamů. Více informací viz Vojta Taraška BRNM.</p>
-    <h4>Nahrajte DEMUS export (soubor s příponou mdb)</h4>
-    <form method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".mdb" required>
-        <select name="type">
-        <option value="jacq">JACQ</option>
-        <option value="pladias">Pladias</option>
-    </select>
-        <input type="submit" value="Zkonvertovat">
-    </form>
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
-</body>
-</html>
+{% block content %}
+<div class="container">
+    <h3>Nástroje pro kurátory herbářových sbírek</h3>
+    <div class="row">
+        <h4>DEMUS Convertor</h4>
+        <p>Tento nástroj vám z DEMUS exportu (typ "Běžný") vygeneruje Excelovou tabulku se strukturou kterou používá JACQ(popř. Pladias) pro hromadný import záznamů.</p>
+        <p>Odborný garant <a href="mailto:vtaraska@mzm.cz">dr. Vojtěch Taraška</a>, Moravské zemské muzeum v Brně</p>
+        <p><a href="{{ url_for('herbarium.demus') }}" target="_blank">link</a></p>
+    </div>
+
+    <div class="row">
+        <h4>Generátor přidělených kódů</h4>
+        <p>Tisk čárových kódů pro herbářové položky</p>
+        <p>Odborný garant <a href="mailto:michal.stefanek@natur.cuni.cz ">Mgr. Michal Štefánek</a>, PřF UK Praha</p>
+        <p><a href="{{ url_for('herbarium.barcodeGenerator') }}" target="_blank">link</a></p>
+    </div>
+
+    <h3>Nástroje pro kurátory genetických bank</h3>
+
+</div>
+{% endblock %}

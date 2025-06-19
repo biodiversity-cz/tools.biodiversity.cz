@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "bootstrap": "^5",
+    "@popperjs/core": "^2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17",
+    "@babel/preset-env": "^7.16",
+    "@symfony/webpack-encore": "^5.0",
+    "core-js": "^3.38",
+    "postcss-loader": "^8",
+    "regenerator-runtime": "^0.13",
+    "sass": "^1",
+    "sass-loader": "^16",
+    "webpack": "^5.74",
+    "webpack-cli": "^5.1",
+    "webpack-notifier": "^1.15"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  }
+}

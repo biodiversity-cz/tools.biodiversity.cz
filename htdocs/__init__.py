@@ -6,8 +6,8 @@ def create_app():
     app.config.from_object(Config)
 
     from .routes.main import main_bp
-    # from .routes.auth import auth_bp
+    from .routes.herbarium import herbarium_bp
     app.register_blueprint(main_bp)
-    # app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(herbarium_bp, url_prefix='/herbarium')
 
     return app

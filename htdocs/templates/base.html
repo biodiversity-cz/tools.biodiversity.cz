@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{% block title %}Tools.Biodiversity.CZ{% endblock %}</title>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="snippet,archive">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='build/app.css') }}" rel="stylesheet">
+</head>
+
+<body>
+<nav class="navbar navbar-light bg-light static-top">
+    <img src="{{ url_for('static', filename='images/ENG_CZ_eosc-logo-barevne.svg') }}" style="max-width: 500px" alt="Logo">
+</nav>
+{% block branding %}<h2>Nástroje a doplňkové služby repozitářů biodiverzitních dat NRP</h2>{% endblock %}
+<hr>
+{% block content %}{% endblock %}
+{% block testimonials %}
+<section class="testimonials bg-light">
+    <div class="container">
+        <div class="row">
+            <img src="https://cdn.muni.cz/media/3526850/eu-msmt-barevne-aj.svg?mode=crop&amp;center=0.5,0.5&amp;rnd=133276035320000000" alt="..." class="mx-auto d-block" style="height: 83px; width: 575px;">
+        </div>
+    </div>
+</section>
+{% endblock %}
+</body>
+<script src="{{ url_for('static', filename='build/app.js') }}"></script>
+</html>
+

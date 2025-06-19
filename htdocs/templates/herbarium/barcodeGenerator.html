@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Seznam přidělených kódů</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .page-break {
+            break-after: page;
+        }
+        td {
+            padding: 2px;
+            text-align: center;
+            vertical-align: middle;
+            width: 33%;
+        }
+        td:nth-child(2) {
+            border: 1px solid black;
+        }
+        td:first-child {
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+        }
+        td:nth-child(3) {
+            border: none !important;
+        }
+        p {
+            margin: 0;
+            padding: 0;
+        }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            table {
+                width: 98vw;
+                height: 98vh;
+            }
+            .container {
+                width: 98vw !important;
+                max-width: 100vw !important;
+                margin: 0 0 0 15pt !important;
+                padding: 0 !important;
+            }
+
+            td {
+                width: 33vw;
+                height: calc(98vh / 14);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <section class="no-print">
+        <h1>Seznam přidělených kódů – generátor</h1>
+        <p>
+            Konfigurace výstupu se provádí úpravou URL – tuto doporučuji si uložit a jen v ní měnit start-stop hodnoty.
+            Časem mohu dodělat další konfiguraci i přímo webový formulář kde by si uživatel navolil, ale prozatím to berme
+            jako pilot a probereme na setkání herbářů zapojených v repozitáři.
+        </p>
+        <p>Modelová URL je:
+            <b>
+                <a href="{{ example_url }}">{{ example_url }}</a>
+            </b>
+        </p>
+        <hr>
+        <br>
+    </section>
+
+    <section>
+        <table class="table">
+            <tbody>
+            {% for code in values %}
+            <tr class="{% if loop.index % 14 == 0 %}page-break{% endif %}">
+                <td>
+                    <p style="font-size: 16pt; text-align: left; margin-bottom: 14pt">Druh:</p>
+                    <p style="font-size: 16pt; text-align: right">Akc. no.: &nbsp;&nbsp;&nbsp;</p>
+                    <p style="font-size: 16pt; text-align: left; margin-top: 14pt">Sběratel+číslo:</p>
+                </td>
+                <td>
+                    <p style="font-size: 18pt; font-weight: bold; text-align: center">{{ title }}</p>
+                    {% if subtitle %}
+                    <p style="font-size: 15pt; text-align: center">{{ subtitle }}</p>
+                    {% endif %}
+                    <img style="max-width: 90%" src="{{ url_for('herbarium.barcode', text=code) }}">
+                    <p style="font-size: 21pt; text-align: center; margin-top: 5px;">{{ code }}</p>
+                </td>
+                <td>
+                    <p style="font-size: 18pt; font-weight: bold; text-align: center">{{ title }}</p>
+                    {% if subtitle %}
+                    <p style="font-size: 15pt; text-align: center">{{ subtitle }}</p>
+                    {% endif %}
+                    <img style="max-width: 90%" src="{{ url_for('herbarium.barcode', text=code) }}">
+                    <p style="font-size: 21pt; text-align: center; margin-top: 5px;">{{ code }}</p>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+</body>
+</html>
