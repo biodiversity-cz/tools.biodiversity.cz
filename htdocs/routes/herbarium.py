@@ -29,9 +29,9 @@ def demus():
 
 @herbarium_bp.route("/barcodeGenerator", methods=["GET"])
 def barcodeGenerator():
-        title = request.args.get("title")
-        subtitle = request.args.get("subtitle")
-        prefix = request.args.get("prefix")
+        title = request.args.get("title","")
+        subtitle = request.args.get("subtitle","")
+        prefix = request.args.get("prefix","")
         start = request.args.get("start", type=int)
         end = request.args.get("end", type=int)
 
@@ -52,8 +52,8 @@ def barcodeGenerator():
             title=title,
             subtitle=subtitle,
             prefix=prefix,
-            start=start,
-            end=end,
+            start=start if start is not None else "",
+            end=end if end is not None else "",
             queryParams=query_params,
             values=values)
 

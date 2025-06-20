@@ -13,19 +13,12 @@
 
 <body>
 <nav class="navbar navbar-light bg-light static-top no-print">
-    <img src="{{ url_for('static', filename='images/ENG_CZ_eosc-logo-barevne.svg') }}" style="max-width: 500px" alt="Logo">
+    <img src="{{ url_for('static', filename='images/ENG_CZ_eosc-logo-barevne.svg') }}" style="max-width: 500px" alt="Logo"><h2>Katalog doplňkových služeb repozitářů biodiverzitních dat NRP <a href="https://biodiversity.cz"><i class="bi bi-box-arrow-up-right me-3"></i></a></h2>
 </nav>
 <hr class="no-print">
-{% block branding %}
-<div class="container mb-3 no-print">
-    <div class="row">
-        <h2>Katalog doplňkových služeb repozitářů biodiverzitních dat NRP [<a href="https://biodiversity.cz">link</a>]
-        </h2>
-    </div>
-</div>
-{% endblock %}
 
 {% block content %}{% endblock %}
+
 {% block testimonials %}
 <section class="testimonials bg-light mt-5 no-print">
     <div class="container">
