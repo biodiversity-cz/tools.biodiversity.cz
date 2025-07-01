@@ -1,4 +1,4 @@
-FROM python:latest@sha256:5f69d22a88dd4cc4ee1576def19aef48c8faa1b566054c44291183831cbad13b
+FROM python:latest@sha256:6f244021b4eebc18b8b577ada606b5765b907bd547dacadfa132fe2acfa5f58f
 
 RUN apt-get update && apt-get install -y \
     mdbtools \
