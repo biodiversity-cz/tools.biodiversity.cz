@@ -1,4 +1,5 @@
 git+https://github.com/biodiversity-cz/demusExporter.git@main
+git+https://github.com/biodiversity-cz/museionExporter.git@main
 flask
 gunicorn
 python-barcode

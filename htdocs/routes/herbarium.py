@@ -1,5 +1,6 @@
 from flask import Response, Flask, request, render_template, send_file, Blueprint, jsonify, current_app, url_for
-from demusExporter.process_file import process_uploaded_file
+from demusExporter.process_file import process_uploaded_file as demus_process
+from museionExporter.process_file import process_uploaded_file as museion_process
 from io import BytesIO
 from barcode import Code39
 from barcode.writer import ImageWriter
@@ -21,11 +22,30 @@ def demus():
         output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
 
         uploaded_file.save(input_path)
-        process_uploaded_file(input_path, output_path, export_type)
+        demus_process(input_path, output_path, export_type)
 
         return send_file(output_path, as_attachment=True)
 
     return render_template("herbarium/demusConvertor.html")
+
+@herbarium_bp.route("/museionConvertor", methods=["GET", "POST"])
+def museion():
+    if request.method == "POST":
+        uploaded_file = request.files["file"]
+        export_type = request.form["type"]
+        if uploaded_file.filename == "":
+            return "Žádný soubor nebyl vybrán"
+
+        input_path = os.path.join(current_app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+        output_filename = uploaded_file.filename.rsplit(".", 1)[0] + "_" + export_type + "output.xlsx"
+        output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
+
+        uploaded_file.save(input_path)
+        museion_process(input_path, output_path, export_type)
+
+        return send_file(output_path, as_attachment=True)
+
+    return render_template("herbarium/museionConvertor.html")
 
 @herbarium_bp.route("/barcodeGenerator", methods=["GET"])
 def barcodeGenerator():
