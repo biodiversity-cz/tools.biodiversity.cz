@@ -1,6 +1,8 @@
-from flask import Response, Flask, request, render_template, send_file, Blueprint, jsonify, current_app, url_for
+from flask import Response, Flask, request, render_template, send_file, Blueprint, jsonify, current_app, url_for, redirect
 from demusExporter.process_file import process_uploaded_file as demus_process
 from museionExporter.process_file import process_uploaded_file as museion_process
+from museionExporter.exportTypes import ExportTypes
+from werkzeug.utils import secure_filename
 from io import BytesIO
 from barcode import Code39
 from barcode.writer import ImageWriter
@@ -17,14 +19,31 @@ def demus():
         if uploaded_file.filename == "":
             return "Žádný soubor nebyl vybrán"
 
-        input_path = os.path.join(current_app.config['UPLOAD_FOLDER'], uploaded_file.filename)
-        output_filename = uploaded_file.filename.rsplit(".", 1)[0] + "_" + export_type + "output.xlsx"
+        filename = secure_filename(uploaded_file.filename)
+        input_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        name_part = filename.rsplit(".", 1)[0]
+        output_filename = f"{name_part}_{export_type}_output"
+        uploaded_file.save(input_path)
+
+        if export_type == ExportTypes.DWC.value:
+            output_filename += ".zip"
+        else:
+            output_filename += ".xlsx"
         output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
 
-        uploaded_file.save(input_path)
-        demus_process(input_path, output_path, export_type)
-
-        return send_file(output_path, as_attachment=True)
+        try:
+            demus_process(input_path, output_path, export_type)
+            return send_file(output_path, as_attachment=True)
+        except Exception as e:
+            current_app.logger.exception("Chyba při zpracování souboru")
+            return redirect(request.url)
+        finally:
+            for path in (input_path, output_path):
+                try:
+                    if os.path.exists(path):
+                        os.remove(path)
+                except Exception as cleanup_err:
+                    current_app.logger.warning(f"Soubor {path} se nepodařilo smazat: {cleanup_err}")
 
     return render_template("herbarium/demusConvertor.html")
 
@@ -33,17 +52,37 @@ def museion():
     if request.method == "POST":
         uploaded_file = request.files["file"]
         export_type = request.form["type"]
+        dwc_description = request.form["dwc_description"]
+        dwc_rights = request.form["dwc_rights"]
+
         if uploaded_file.filename == "":
             return "Žádný soubor nebyl vybrán"
 
-        input_path = os.path.join(current_app.config['UPLOAD_FOLDER'], uploaded_file.filename)
-        output_filename = uploaded_file.filename.rsplit(".", 1)[0] + "_" + export_type + "output.xlsx"
-        output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
-
+        filename = secure_filename(uploaded_file.filename)
+        input_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        name_part = filename.rsplit(".", 1)[0]
+        output_filename = f"{name_part}_{export_type}_output"
         uploaded_file.save(input_path)
-        museion_process(input_path, output_path, export_type)
 
-        return send_file(output_path, as_attachment=True)
+        if export_type == ExportTypes.DWC.value:
+            output_filename += ".zip"
+        else:
+            output_filename += ".xlsx"
+
+        output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
+        try:
+            museion_process(input_path, output_path, export_type, dwc_description, '', '', dwc_rights)
+            return send_file(output_path, as_attachment=True)
+        except Exception as e:
+            current_app.logger.exception("Chyba při zpracování souboru")
+            return redirect(request.url)
+        finally:
+            for path in (input_path, output_path):
+                try:
+                    if os.path.exists(path):
+                        os.remove(path)
+                except Exception as cleanup_err:
+                    current_app.logger.warning(f"Soubor {path} se nepodařilo smazat: {cleanup_err}")
 
     return render_template("herbarium/museionConvertor.html")
 
