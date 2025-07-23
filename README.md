@@ -6,11 +6,9 @@ Tools and services for repository users
 sudo apt update
 sudo apt install mdbtools unixodbc-dev 
 
-python3 -m venv venv
-source venv/bin/activate
+poetry env use python3.13
+poetry install
 
-pip install -r requirements.txt
-
-python run.py
+poetry run python run.py
 ```
 

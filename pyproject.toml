@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "tools-biodiversity-cz"
+version = "0.2.0"
+description = ""
+authors = [
+    "Petr Novotný <krkabol@gmail.com>"
+]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+Flask = "^3.1"
+gunicorn = "^23.0"
+pillow = "^11"
+python-barcode= "^0.15"
+demusexporter = { git = "https://github.com/biodiversity-cz/demusExporter.git" }
+museionexporter = { git = "https://github.com/biodiversity-cz/museionExporter.git" }

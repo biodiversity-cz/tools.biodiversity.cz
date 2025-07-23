@@ -1,7 +1,7 @@
 from flask import Response, Flask, request, render_template, send_file, Blueprint, jsonify, current_app, url_for, redirect
-from demusExporter.process_file import process_uploaded_file as demus_process
-from museionExporter.process_file import process_uploaded_file as museion_process
-from museionExporter.exportTypes import ExportTypes
+from demusexporter.process_file import process_uploaded_file as demus_process
+from museionexporter.process_file import process_uploaded_file as museion_process
+from museionexporter.exportTypes import ExportTypes
 from werkzeug.utils import secure_filename
 from io import BytesIO
 from barcode import Code39

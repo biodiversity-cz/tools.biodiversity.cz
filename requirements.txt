@@ -1,6 +1,0 @@
-Flask==3.1.1
-gunicorn==23.0.0
-pillow
-python-barcode==0.15.1
-demusExporter @ git+https://github.com/biodiversity-cz/demusExporter.git@bebc920a766972d4ab4a793771644a6185bca148
-MuseionExporter @ git+https://github.com/biodiversity-cz/museionExporter.git@d646dcb07dde83f5a5f9f43c0426f82a2ce1a806
