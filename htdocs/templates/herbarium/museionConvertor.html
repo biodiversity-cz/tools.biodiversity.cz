@@ -12,7 +12,8 @@
                     <span class="badge bg-dwc rounded-pill ms-1">DarwinCore</span>
                 </div>
                 <div class="col-auto ms-auto">
-                    Odborný konzultant: <a href="mailto:safarova@vcm.cz">Lenka Šafářová</a>, Východočeské muzeum v Pardubicích
+                    Odborný konzultant: <a href="mailto:safarova@vcm.cz">Lenka Šafářová</a>, Východočeské muzeum v
+                    Pardubicích
                 </div>
                 <div class="col-auto">
                     <a href="https://github.com/biodiversity-cz/museionExporter" class="notion-link" target="_blank"
@@ -27,11 +28,38 @@
         </div>
         <div class="card-body">
             <h5 class="card-title">Konvertor botanických nálezů z databáze Museion</h5>
-            <p class="card-text">Ve vaší databázi Museion si vyexportujte záznamy které chcete zkonvertovat. Při
-                volbě exportu přidejte vedle  implicitních sloupců také sloupce XX, YY - získáte soubor ve formátu MS Excel (xlsx). Tento soubor nahrajte
-                do formuláře zde na stránce a chvíli vyčkejte. Po dokončení transformace se vám stáhnou převedená data. Vaše data se nikam nenahrávají ani neukládají, pokud je chcete sdílet v
+            <p class="card-text">Ve vaší databázi Museion si vyexportujte záznamy které chcete zkonvertovat – získáte
+                soubor ve formátu MS Excel (xlsx). Tento soubor nahrajte
+                do formuláře zde na stránce a chvíli vyčkejte. Po dokončení transformace se vám stáhnou převedená data.
+                Vaše data se nikam nenahrávají ani neukládají, pokud je chcete sdílet v
                 platformách jako je JACQ či PLADIAS, musíte tak učinit pomocí jejich importních nástrojů.</p>
-            <p>U konverze JACQ a PLADIAS je výstupním formátem Excel tabulka, u DarwinCore získáte ZIP archive - ten slouží k předání dat na GBIF.</p>
+            <p>U konverze JACQ a PLADIAS je výstupním formátem Excel tabulka, u DarwinCore získáte ZIP archive – ten
+                slouží k předání dat na GBIF.</p>
+            <p>Export z Museion musí obsahovat všechny zde uvedené sloupce:</p>
+            <ul>
+                <li>Inventární číslo</li>
+                <li>Taxon-nomen</li>
+                <li>Confer</li>
+                <li>Variabilita</li>
+                <li>Originální jméno</li>
+                <li>(n) Autoři/sběratelé</li>
+                <li>Datace sběru</li>
+                <li>Určil</li>
+                <li>Datum určení</li>
+                <li>Lokalita - název</li>
+                <li>Lokalita - originální název</li>
+                <li>Charakteristika místa sběru</li>
+                <li>Souř. přesnost</li>
+                <li>Souř. zdroj</li>
+                <li>Nadmořská výška</li>
+                <li>Fytochorion - kód</li>
+                <li>Čtverec</li>
+                <li>Datum zápisu</li>
+                <li>Poznámka k nálezu</li>
+                <li>Zem. délka (°)</li>
+                <li>Zem. šířka (°)</li>
+                <li>Herbář</li>
+            </ul>
             <form method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-auto">
@@ -48,18 +76,19 @@
                         <button type="submit" class="btn btn-primary mb-3">Zkonvertovat</button>
                     </div>
                 </div>
-                 <div id="dwcInputs" class="row mt-4" style="display: none;">
-                        <div class="col-12 mb-2"><strong>Doplňující údaje pro DarwinCore:</strong></div>
+                <div id="dwcInputs" class="row mt-4" style="display: none;">
+                    <div class="col-12 mb-2"><strong>Doplňující údaje pro DarwinCore:</strong></div>
 
-                        <div class="col-md-6 mb-3">
-                            <label for="dwc_description" class="form-label">Popis datasetu</label>
-                            <input type="text" id="dwc_description" name="dwc_description" class="form-control" placeholder="Dataset created from data of herbarium XY in ZZ">
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <label for="dwc_rights" class="form-label">Práva</label>
-                            <input type="text" id="dwc_rights" name="dwc_rights" class="form-control" placeholder="">
-                        </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="dwc_description" class="form-label">Popis datasetu</label>
+                        <input type="text" id="dwc_description" name="dwc_description" class="form-control"
+                               placeholder="Dataset created from data of herbarium XY in ZZ">
                     </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="dwc_rights" class="form-label">Práva</label>
+                        <input type="text" id="dwc_rights" name="dwc_rights" class="form-control" placeholder="">
+                    </div>
+                </div>
             </form>
         </div>
     </div>
