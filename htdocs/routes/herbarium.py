@@ -16,6 +16,9 @@ def demus():
     if request.method == "POST":
         uploaded_file = request.files["file"]
         export_type = request.form["type"]
+        dwc_description = request.form["dwc_description"]
+        dwc_rights = request.form["dwc_rights"]
+
         if uploaded_file.filename == "":
             return "Žádný soubor nebyl vybrán"
 
@@ -32,7 +35,7 @@ def demus():
         output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
 
         try:
-            demus_process(input_path, output_path, export_type)
+            demus_process(input_path, output_path, export_type, dwc_description, '', '', dwc_rights)
             return send_file(output_path, as_attachment=True)
         except Exception as e:
             current_app.logger.exception("Chyba při zpracování souboru")
