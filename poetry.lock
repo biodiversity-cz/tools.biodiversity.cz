@@ -274,7 +274,7 @@ sqlalchemy = "^2"
 type = "git"
 url = "https://github.com/biodiversity-cz/demusExporter.git"
 reference = "HEAD"
-resolved_reference = "01694d87fc8ebf74cbc9013c5ca4875149885b03"
+resolved_reference = "560da27ea94357137cce3341aafa58f4f5bba108"
 
 [[package]]
 name = "dnspython"
