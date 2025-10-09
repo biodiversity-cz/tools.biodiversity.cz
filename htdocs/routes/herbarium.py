@@ -1,6 +1,7 @@
 from flask import Response, Flask, request, render_template, send_file, Blueprint, jsonify, current_app, url_for, redirect
 from demusexporter.process_file import process_uploaded_file as demus_process
 from museionexporter.process_file import process_uploaded_file as museion_process
+from slide_label_generator.process_file import process_uploaded_file as slide_label_process
 from museionexporter.exportTypes import ExportTypes
 from werkzeug.utils import secure_filename
 from io import BytesIO
@@ -88,6 +89,58 @@ def museion():
                     current_app.logger.warning(f"Soubor {path} se nepodařilo smazat: {cleanup_err}")
 
     return render_template("herbarium/museionConvertor.html")
+
+@herbarium_bp.route("/slideLabels", methods=["GET", "POST"])
+def slide_label():
+    if request.method == "POST":
+        uploaded_file = request.files["file"]
+        if uploaded_file.filename == "":
+            return "Žádný soubor nebyl vybrán"
+
+        # Načtení marginů z formuláře (jsou čísla)
+        try:
+            margin_top = int(request.form.get("marginTop", 15))
+            margin_bottom = int(request.form.get("marginBottom", 15))
+            margin_left = int(request.form.get("marginLeft", 10))
+            margin_right = int(request.form.get("marginRight", 10))
+            space_x = int(request.form.get("space_x", 1))
+            space_y = int(request.form.get("space_y", 1))
+        except ValueError:
+            return "Neplatná hodnota marginu nebo paddingu"
+
+        filename = secure_filename(uploaded_file.filename)
+        input_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        name_part = filename.rsplit(".", 1)[0]
+        output_filename = f"{name_part}_output"
+        uploaded_file.save(input_path)
+
+        output_filename += ".pdf"
+
+        output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
+        try:
+            slide_label_process(
+                input_path,
+                output_path,
+                margin_top=margin_top,
+                margin_bottom=margin_bottom,
+                margin_left=margin_left,
+                margin_right=margin_right,
+                space_x=space_x,
+                space_y=space_y
+            )
+            return send_file(output_path, as_attachment=True)
+        except Exception as e:
+            current_app.logger.exception("Chyba při zpracování souboru")
+            return redirect(request.url)
+        finally:
+            for path in (input_path, output_path):
+                try:
+                    if os.path.exists(path):
+                        os.remove(path)
+                except Exception as cleanup_err:
+                    current_app.logger.warning(f"Soubor {path} se nepodařilo smazat: {cleanup_err}")
+
+    return render_template("herbarium/slideLabels.html")
 
 @herbarium_bp.route("/barcodeGenerator", methods=["GET"])
 def barcodeGenerator():

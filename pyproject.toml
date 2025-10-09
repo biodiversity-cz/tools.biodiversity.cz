@@ -3,7 +3,7 @@ name = "tools-biodiversity-cz"
 version = "0.2.0"
 description = ""
 authors = [
-    "Petr Novotný <krkabol@gmail.com>"
+    "Petr Novotný <novotp@natur.cuni.cz>"
 ]
 license = "MIT"
 readme = "README.md"
@@ -16,3 +16,4 @@ pillow = "^11"
 python-barcode= "^0.15"
 demusexporter = { git = "https://github.com/biodiversity-cz/demusExporter.git" }
 museionexporter = { git = "https://github.com/biodiversity-cz/museionExporter.git" }
+slide_label_generator = { git = "https://github.com/biodiversity-cz/slideLabelGenerator.git" }

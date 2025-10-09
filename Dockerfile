@@ -2,6 +2,8 @@ FROM python:latest@sha256:081e7d0f7e520a653648602d10dcf11a832c8480b98698795d5fe8
 
 RUN apt-get update && apt-get install -y \
     mdbtools \
+    fonts-dejavu \
+    && fc-cache -f -v \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir poetry
