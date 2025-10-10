@@ -27,6 +27,7 @@
             <p>Výstupem je PDF tisková sada štítků o velikosti 24 × 24 mm. Věcný obsah je čerpán z Excelového souboru
                 (viz <a href="{{ url_for('static', filename='herbarium/slideLableGeneratorTemplate.xlsx') }}">vzor</a>),
                 nastavení okrajů a prokladu mezi štítky pak pomocí dalších polí formuláře.</p>
+            <p>Jednotlivé prvky štítku mají nastavenou fixní velikost fontu, z toho vyplývá omezení na délku řetězců které je možné do štítku vložit (cca 18 znaků pro taxon a 12 znaků na jednotlivé řádky popisu). Generátor texty neořezává, před tiskem si proto štítky zkontrolujte. Obsah QR kódu (tj. délka URL odkazu na PID položky) ovlivňuje velikost výsledného obrazce; pro správné načtení čtečkou je nezbytný bílý rámeček kolem kódu. V případě delších URL prosím proto ověřte také strojovou čitelnost vygenerovaných QR kódů.</p>
 
             <form method="post" enctype="multipart/form-data">
                 <div class="row">
