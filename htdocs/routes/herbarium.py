@@ -1,4 +1,4 @@
-from flask import Response, Flask, request, render_template, send_file, Blueprint, jsonify, current_app, url_for, redirect
+from flask import Response, Flask, request, render_template, send_file, Blueprint, jsonify, current_app, url_for, redirect, flash
 from demusexporter.process_file import process_uploaded_file as demus_process
 from museionexporter.process_file import process_uploaded_file as museion_process
 from slide_label_generator.process_file import process_uploaded_file as slide_label_process
@@ -40,6 +40,7 @@ def demus():
             return send_file(output_path, as_attachment=True)
         except Exception as e:
             current_app.logger.exception("Chyba při zpracování souboru")
+            flash(f"Chyba při zpracování souboru: {str(e)}", "error")
             return redirect(request.url)
         finally:
             for path in (input_path, output_path):
@@ -79,6 +80,7 @@ def museion():
             return send_file(output_path, as_attachment=True)
         except Exception as e:
             current_app.logger.exception("Chyba při zpracování souboru")
+            flash(f"Chyba při zpracování souboru: {str(e)}", "error")
             return redirect(request.url)
         finally:
             for path in (input_path, output_path):
@@ -131,6 +133,7 @@ def slide_label():
             return send_file(output_path, as_attachment=True)
         except Exception as e:
             current_app.logger.exception("Chyba při zpracování souboru")
+            flash(f"Chyba při zpracování souboru: {str(e)}", "error")
             return redirect(request.url)
         finally:
             for path in (input_path, output_path):
