@@ -31,13 +31,15 @@ def demus():
 
         if export_type == ExportTypes.DWC.value:
             output_filename += ".zip"
+            output_mime = 'application/zip'
         else:
             output_filename += ".xlsx"
+            output_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
 
         try:
             demus_process(input_path, output_path, export_type, dwc_description, '', '', dwc_rights)
-            return send_file(output_path, as_attachment=True)
+            return stream_file(output_path, output_filename, output_mime)
         except Exception as e:
             current_app.logger.exception("Chyba při zpracování souboru")
             flash(f"Chyba při zpracování souboru: {str(e)}", "error")
@@ -203,3 +205,22 @@ def barcode(text):
     buf.seek(0)
 
     return Response(buf.getvalue(), mimetype="image/png", headers={"Cache-Control": "max-age=86400"})
+
+def stream_file(path, filename=None, mimetype="text/csv"):
+    def generate():
+        with open(path, 'rb') as f:
+            while True:
+                chunk = f.read(1024 * 1024)  # 1 MB
+                if not chunk:
+                    break
+                yield chunk
+
+    headers = {}
+    if filename:
+        headers['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    return Response(
+        generate(),
+        mimetype=mimetype,
+        headers=headers,
+    )
