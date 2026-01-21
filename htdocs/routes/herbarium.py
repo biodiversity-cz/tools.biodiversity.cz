@@ -28,6 +28,8 @@ def demus():
         name_part = filename.rsplit(".", 1)[0]
         output_filename = f"{name_part}_{export_type}_output"
         uploaded_file.save(input_path)
+        
+        current_app.logger.info(f"File uploaded: {input_path}")
 
         if export_type == ExportTypes.DWC.value:
             output_filename += ".zip"
@@ -36,9 +38,17 @@ def demus():
             output_filename += ".xlsx"
             output_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
+        
+        current_app.logger.info(f"Expected output path: {output_path}")
 
         try:
+            current_app.logger.info(f"Starting demus_process with input: {input_path}, output: {output_path}")
             demus_process(input_path, output_path, export_type, dwc_description, '', '', dwc_rights)
+            current_app.logger.info(f"demus_process completed. Checking if output file exists: {os.path.exists(output_path)}")
+            if not os.path.exists(output_path):
+                current_app.logger.error(f"Output file was not created at {output_path}")
+                flash(f"Chyba: Výstupní soubor nebyl vytvořen", "error")
+                return redirect(request.url)
             return stream_file(output_path, output_filename, output_mime)
         except Exception as e:
             current_app.logger.exception("Chyba při zpracování souboru")
@@ -70,6 +80,8 @@ def museion():
         name_part = filename.rsplit(".", 1)[0]
         output_filename = f"{name_part}_{export_type}_output"
         uploaded_file.save(input_path)
+        
+        current_app.logger.info(f"Museion file uploaded: {input_path}")
 
         if export_type == ExportTypes.DWC.value:
             output_filename += ".zip"
@@ -77,8 +89,16 @@ def museion():
             output_filename += ".xlsx"
 
         output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
+        current_app.logger.info(f"Museion expected output path: {output_path}")
+        
         try:
+            current_app.logger.info(f"Starting museion_process with input: {input_path}, output: {output_path}")
             museion_process(input_path, output_path, export_type, dwc_description, '', '', dwc_rights)
+            current_app.logger.info(f"museion_process completed. Checking if output file exists: {os.path.exists(output_path)}")
+            if not os.path.exists(output_path):
+                current_app.logger.error(f"Output file was not created at {output_path}")
+                flash(f"Chyba: Výstupní soubor nebyl vytvořen", "error")
+                return redirect(request.url)
             return send_file(output_path, as_attachment=True)
         except Exception as e:
             current_app.logger.exception("Chyba při zpracování souboru")
@@ -117,11 +137,16 @@ def slide_label():
         name_part = filename.rsplit(".", 1)[0]
         output_filename = f"{name_part}_output"
         uploaded_file.save(input_path)
+        
+        current_app.logger.info(f"Slide label file uploaded: {input_path}")
 
         output_filename += ".pdf"
 
         output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
+        current_app.logger.info(f"Slide label expected output path: {output_path}")
+        
         try:
+            current_app.logger.info(f"Starting slide_label_process with input: {input_path}, output: {output_path}")
             slide_label_process(
                 input_path,
                 output_path,
@@ -132,6 +157,11 @@ def slide_label():
                 space_x=space_x,
                 space_y=space_y
             )
+            current_app.logger.info(f"slide_label_process completed. Checking if output file exists: {os.path.exists(output_path)}")
+            if not os.path.exists(output_path):
+                current_app.logger.error(f"Output file was not created at {output_path}")
+                flash(f"Chyba: Výstupní soubor nebyl vytvořen", "error")
+                return redirect(request.url)
             return send_file(output_path, as_attachment=True)
         except Exception as e:
             current_app.logger.exception("Chyba při zpracování souboru")
@@ -207,18 +237,30 @@ def barcode(text):
     return Response(buf.getvalue(), mimetype="image/png", headers={"Cache-Control": "max-age=86400"})
 
 def stream_file(path, filename=None, mimetype="text/csv"):
+    current_app.logger.info(f"Streaming file from path: {path}")
+    current_app.logger.info(f"File exists: {os.path.exists(path)}")
+    
+    if not os.path.exists(path):
+        current_app.logger.error(f"File not found at path: {path}")
+        raise FileNotFoundError(f"File not found at path: {path}")
+    
     def generate():
-        with open(path, 'rb') as f:
-            while True:
-                chunk = f.read(1024 * 1024)  # 1 MB
-                if not chunk:
-                    break
-                yield chunk
+        try:
+            with open(path, 'rb') as f:
+                while True:
+                    chunk = f.read(1024 * 1024)  # 1 MB
+                    if not chunk:
+                        break
+                    yield chunk
+        except Exception as e:
+            current_app.logger.error(f"Error reading file {path}: {str(e)}")
+            raise
 
     headers = {}
     if filename:
         headers['Content-Disposition'] = f'attachment; filename="{filename}"'
 
+    current_app.logger.info(f"Streaming file with mimetype: {mimetype}")
     return Response(
         generate(),
         mimetype=mimetype,
