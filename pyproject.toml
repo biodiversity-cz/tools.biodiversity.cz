@@ -11,9 +11,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.13"
 Flask = "^3.1"
-gunicorn = "^23.0"
-pillow = "^11"
-python-barcode= "^0.15"
+gunicorn = "^25.0"
+pillow = "^12"
+python-barcode= "^0.16"
 demusexporter = { git = "https://github.com/biodiversity-cz/demusExporter.git" }
 museionexporter = { git = "https://github.com/biodiversity-cz/museionExporter.git" }
 slide_label_generator = { git = "https://github.com/biodiversity-cz/slideLabelGenerator.git" }
