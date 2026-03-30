@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}SheetGen | Biodiversity.CZ{% endblock %}
+{% block content %}
+<section class="no-print container">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-auto">
+                    <span class="badge bg-print rounded-pill ms-1">tisková sestava</span>
+                </div>
+                <div class="col-auto ms-auto">
+                    Odborný konzultant: <a href="mailto:michal.stefanek@natur.cuni.cz ">Michal
+                    Štefánek</a>, PřF UK Praha
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Generátor podkladových archů</h5>
+            <p class="card-text">Vyplňte údaje ve fromuláři a vygenerujte si sestavu, která představuje podkladový arch
+                specimenu - obsahuje barcode a "razítko" instituce.
+                Náhled se objeví pod formulářem, ale opravdové rozložení pro tisk uvidíte až po vyvolání tiskového dialogu
+                (Ctrl+P) 🖨️. Nastavení předpokládá tisk na papír formátu A3 (nezapomeňte při tisku nastavit), pro nejlepší výsledky nastavte okraje na
+                „žádné“ (None). <br> Po odeslání formuláře si můžete uložit odkaz do záložek prohlížeče, budete tak mít
+                předvyplněné hodnoty pro příště.</p>
+            <form method="get" class="g-3" action="">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="stamp" class="form-label">Text "razítka"</label>
+                            <input type="text" class="form-control" name="stamp" id="stamp"
+                                   placeholder="Herbarium <br> Universitatis <br> Carolinae, Praga" value="{{ stamp }}">
+                        </div>
+                         <div class="mb-3">
+                            <label for="title" class="form-label">Jméno herbáře</label>
+                            <input type="text" class="form-control" name="title" id="title"
+                                   placeholder="Herbarium Universitatis Carolinae, Praga" value="{{ title }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="subtitle" class="form-label">Sbírka</label>
+                            <input type="text" class="form-control" name="subtitle" id="subtitle" placeholder="Váňa"
+                                   value="{{ subtitle }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="acronym" class="form-label">Akronym/prefix</label>
+                            <input type="text" class="form-control" name="acronym" id="acronym" placeholder="PRC"
+                                   value="{{ acronym }}">
+                        </div>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="start" class="form-label">První ID</label>
+                            <input type="text" class="form-control" name="start" id="start" inputmode="numeric"
+                                   pattern="[0-9]+"
+                                   title="Zadejte celé číslo" required placeholder="1000" value="{{ start }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="end" class="form-label">Poslední ID</label>
+                            <input type="text" class="form-control" name="end" id="end" inputmode="numeric"
+                                   pattern="[0-9]+"
+                                   title="Zadejte celé číslo" required placeholder="1250" value="{{ end }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-3">Vytvořit sestavu</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section>
+    {% for code in values %}
+    <div class="sheet">
+        <div class="stamp">
+            {{stamp | safe}} <span style="font-size: 120%">{{acronym}}</span>
+        </div>
+        <div class="barcode">
+             <div class="herbarium">{{ title }}</div>
+            {% if subtitle %}
+            <div class="collection">{{ subtitle }}</div>
+            {% endif %}
+            <img src="{{ url_for('herbarium.barcode', text=code) }}">
+            <div class="barcodeId">{{ code }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+@media print {
+  div.sheet {
+    position: relative;
+    page-break-after: always;
+    height: 41cm; /* A3 výška */
+
+    .barcode {
+      position: absolute;
+      left: 0.5cm;
+      bottom: 0cm;
+      width: 6.3cm;
+      height: 2cm;
+      padding: 0.5mm;
+      text-align: center;
+
+    }
+
+    .stamp {
+      font-variant: small-caps;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+      position: absolute;
+      right: 0.5cm;
+      top: 0.5cm;
+      text-align: center;
+    }
+
+    .herbarium {
+      font-size: 8pt;
+      font-weight: bold;
+    }
+
+    .collection {
+      font-size: 7pt;
+    }
+
+    .barcodeId {
+      font-size: 10pt;
+    }
+
+    img {
+      height: 8mm;
+    }
+  }
+}
+

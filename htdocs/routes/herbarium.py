@@ -226,6 +226,39 @@ def barcodeGenerator():
             queryParams=query_params,
             values=values)
 
+@herbarium_bp.route("/sheetGenerator", methods=["GET"])
+def sheetGenerator():
+        title = request.args.get("title", "")
+        subtitle = request.args.get("subtitle", "")
+        stamp = request.args.get("stamp","")
+        acronym = request.args.get("acronym","")
+        start = request.args.get("start", type=int)
+        end = request.args.get("end", type=int)
+
+        query_params = {k: v for k, v in {
+            "title": title,
+            "subtitle": subtitle,
+            "stamp": stamp,
+            "acronym": acronym,
+            "start": start,
+            "end": end
+        }.items() if v is not None}
+
+        values = []
+        if start is not None and end is not None and acronym is not None:
+            values = [f"{acronym} {i}" for i in range(start, end + 1)]
+
+        return render_template(
+            "herbarium/sheetGenerator.html",
+            title=title,
+            subtitle=subtitle,
+            stamp=stamp,
+            acronym=acronym,
+            start=start if start is not None else "",
+            end=end if end is not None else "",
+            queryParams=query_params,
+            values=values)
+
 @herbarium_bp.route("/barcode/<path:text>")
 def barcode(text):
     if not text:
