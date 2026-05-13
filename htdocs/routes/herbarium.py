@@ -26,8 +26,6 @@ def demus():
     if request.method == "POST":
         uploaded_file = request.files["file"]
         export_type = request.form["type"]
-        dwc_description = request.form["dwc_description"]
-        dwc_rights = request.form["dwc_rights"]
 
         if uploaded_file.filename == "":
             return "Žádný soubor nebyl vybrán"
@@ -40,19 +38,15 @@ def demus():
         
         # current_app.logger.info(f"File uploaded: {input_path}")
 
-        if export_type == ExportTypes.DWC.value:
-            output_filename += ".zip"
-            output_mime = 'application/zip'
-        else:
-            output_filename += ".xlsx"
-            output_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        output_filename += ".xlsx"
+        output_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
         
         # current_app.logger.info(f"Expected output path: {output_path}")
 
         try:
             # current_app.logger.info(f"Starting demus_process with input: {input_path}, output: {output_path}")
-            demus_process(input_path, output_path, export_type, dwc_description, '', '', dwc_rights)
+            demus_process(input_path, output_path, export_type)
             # current_app.logger.info(f"demus_process completed. Checking if output file exists: {os.path.exists(output_path)}")
             if not os.path.exists(output_path):
                 current_app.logger.error(f"Output file was not created at {output_path}")
@@ -82,8 +76,6 @@ def museion():
     if request.method == "POST":
         uploaded_file = request.files["file"]
         export_type = request.form["type"]
-        dwc_description = request.form["dwc_description"]
-        dwc_rights = request.form["dwc_rights"]
 
         if uploaded_file.filename == "":
             return "Žádný soubor nebyl vybrán"
@@ -96,17 +88,14 @@ def museion():
         
         # current_app.logger.info(f"Museion file uploaded: {input_path}")
 
-        if export_type == ExportTypes.DWC.value:
-            output_filename += ".zip"
-        else:
-            output_filename += ".xlsx"
+        output_filename += ".xlsx"
 
         output_path = os.path.join(current_app.config['RESULT_FOLDER'], output_filename)
         # current_app.logger.info(f"Museion expected output path: {output_path}")
         
         try:
             # current_app.logger.info(f"Starting museion_process with input: {input_path}, output: {output_path}")
-            museion_process(input_path, output_path, export_type, dwc_description, '', '', dwc_rights)
+            museion_process(input_path, output_path, export_type)
             # current_app.logger.info(f"museion_process completed. Checking if output file exists: {os.path.exists(output_path)}")
             if not os.path.exists(output_path):
                 current_app.logger.error(f"Output file was not created at {output_path}")

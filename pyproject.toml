@@ -1,6 +1,7 @@
 [tool.poetry]
 name = "tools-biodiversity-cz"
-version = "0.2.0"
+version = "0.2.1"
+package-mode = false
 description = ""
 authors = [
     "Petr Novotný <novotp@natur.cuni.cz>"
@@ -11,9 +12,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.13"
 Flask = "^3.1"
-gunicorn = "^25.0"
+gunicorn = "^26"
 pillow = "^12"
 python-barcode= "^0.16"
-demusexporter = { git = "https://github.com/biodiversity-cz/demusExporter.git" }
-museionexporter = { git = "https://github.com/biodiversity-cz/museionExporter.git" }
-slide_label_generator = { git = "https://github.com/biodiversity-cz/slideLabelGenerator.git" }
+demusexporter = { git = "https://github.com/biodiversity-cz/demusExporter.git", tag = "v0.2.1" }
+museionexporter = { git = "https://github.com/biodiversity-cz/museionExporter.git", tag = "v0.2.1" }
+slide_label_generator = { git = "https://github.com/biodiversity-cz/slideLabelGenerator.git", tag = "v0.1.1" }
