@@ -536,8 +536,8 @@ pandas = "^3"
 [package.source]
 type = "git"
 url = "https://github.com/biodiversity-cz/museionExporter.git"
-reference = "v0.2.2"
-resolved_reference = "94ab5f64ba6805a8d8a1dc84bb69dddb6c9adacd"
+reference = "v0.2.3"
+resolved_reference = "6ca59e7945540e96fe5a2ff3380b0f5b7940b6b6"
 
 [[package]]
 name = "numpy"
@@ -1267,4 +1267,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "ab04a1e1c3eb81e9d8d729b4c1e484c35fc63dc26c6a23b2c3be72687e8f9ec0"
+content-hash = "296b71234e624d0b1e9da98f8b29461ca1bbde9eb4b487e3dfde77c4a383088d"
