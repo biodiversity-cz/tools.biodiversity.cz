@@ -5,7 +5,7 @@ div.label {
   padding: 0.5mm;
   page-break-inside: avoid;
   text-align: center;
-  line-height: 1.1;
+  line-height: 1.1 !important;
 
   .druh {
     font-size: 7pt;
